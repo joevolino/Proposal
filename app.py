@@ -2,10 +2,12 @@
 
 Run:  python app.py   (then open http://localhost:5000)
 Set ANTHROPIC_API_KEY to enable AI drafting from uploaded documents.
+Set APP_PASSWORD (and optionally APP_USERNAME) to require a login, which any public deployment should do.
 """
 
 from __future__ import annotations
 
+import hmac
 import os
 import re
 import traceback
@@ -19,6 +21,26 @@ from proposal_tool.pdf import build_pdf
 ROOT = os.path.dirname(os.path.abspath(__file__))
 app = Flask(__name__, static_folder=os.path.join(ROOT, "static"), static_url_path="/static")
 app.config["MAX_CONTENT_LENGTH"] = int(os.environ.get("PROPOSAL_MAX_UPLOAD_MB", "80")) * 1024 * 1024
+
+
+@app.before_request
+def require_login():
+    """HTTP Basic auth when APP_PASSWORD is set. /healthz stays open for the host's health checks."""
+    password = os.environ.get("APP_PASSWORD")
+    if not password or request.path == "/healthz":
+        return None
+    auth = request.authorization
+    user_ok = auth is not None and hmac.compare_digest((auth.username or "").encode(),
+                                                       os.environ.get("APP_USERNAME", "vensurehr").encode())
+    pass_ok = auth is not None and hmac.compare_digest((auth.password or "").encode(), password.encode())
+    if user_ok and pass_ok:
+        return None
+    return Response("Login required.", 401, {"WWW-Authenticate": 'Basic realm="VensureHR Proposal Builder"'})
+
+
+@app.get("/healthz")
+def healthz():
+    return "ok"
 
 
 def ai_available() -> bool:

@@ -51,11 +51,31 @@ Without an API key the tool still works. It imports the pricing illustration, an
 | `PROPOSAL_MODEL` | `claude-opus-5` | Claude model used for drafting |
 | `PROPOSAL_EFFORT` | `high` | Model effort (`low`, `medium`, `high`, `xhigh`, `max`) |
 | `PROPOSAL_MAX_UPLOAD_MB` | `80` | Upload size limit per request |
+| `APP_PASSWORD` | none | When set, the site requires a login (use this on any public deployment) |
+| `APP_USERNAME` | `vensurehr` | Login username when `APP_PASSWORD` is set |
 | `HOST` / `PORT` | `127.0.0.1` / `5000` | Bind address |
 
 AI drafting uses Claude's server-side refusal fallback (`fallbacks: "default"`). If the primary model declines a request, the API retries it on a fallback model in the same call.
 
 A draft with large rate packets can take a few minutes. If you deploy behind a WSGI server, raise the request timeout, for example `gunicorn -w 2 --timeout 600 app:app`.
+
+## Deploy on Render (get a shareable link)
+
+The repo includes a Render Blueprint (`render.yaml`) that runs the app with gunicorn.
+
+1. Merge the pull request so `render.yaml` is on `main`, or pick this branch when Render asks for one.
+2. Sign in at [dashboard.render.com](https://dashboard.render.com) and connect your GitHub account when prompted.
+3. Choose **New → Blueprint**, select the `joevolino/Proposal` repository, and click **Apply**.
+4. When Render asks for the secret values, enter:
+   - `ANTHROPIC_API_KEY`: your Anthropic API key (from console.anthropic.com)
+   - `APP_PASSWORD`: a password for your team. The username is `vensurehr` (change it with `APP_USERNAME`).
+5. Wait for the first build (a few minutes). Your link will look like `https://vensurehr-proposal-builder.onrender.com`.
+
+Notes:
+- **Plan:** the Blueprint uses Render's **free** plan. It sleeps after 15 idle minutes, so the first visit afterwards takes about a minute to load. For an always-on site, change `plan: free` to `plan: starter` in `render.yaml` (a paid Render plan).
+- **Updates:** every push to the deployed branch redeploys the site automatically.
+- **Login:** whenever `APP_PASSWORD` is set, the whole site asks for a username and password. Leave it set on any public URL, because the site handles client documents and uses your API credit.
+- **Custom address:** you can attach a domain such as `proposals.yourdomain.com` under the service's **Settings → Custom Domains**.
 
 **Branding:** colors match the sample proposal (navy `#0E1E3A`, orange `#F26522`, teal `#00A9C0`). To replace the built-in wordmark, drop a white/transparent `logo.png` into `assets/`.
 

@@ -147,3 +147,24 @@ def test_draft_endpoint_with_stubbed_ai(monkeypatch):
     assert "Open item: current Justworks invoice" in body["warnings"]
     res = client.post("/api/pdf", json=p)
     assert res.status_code == 200 and res.data.startswith(b"%PDF")
+
+
+def test_login_required_when_password_set(monkeypatch):
+    import base64
+    import app as webapp
+
+    monkeypatch.setenv("APP_PASSWORD", "s3cret")
+    client = webapp.app.test_client()
+    assert client.get("/").status_code == 401
+    assert client.get("/healthz").status_code == 200
+    bad = base64.b64encode(b"vensurehr:wrong").decode()
+    assert client.get("/api/config", headers={"Authorization": f"Basic {bad}"}).status_code == 401
+    good = base64.b64encode(b"vensurehr:s3cret").decode()
+    assert client.get("/api/config", headers={"Authorization": f"Basic {good}"}).status_code == 200
+
+
+def test_open_when_no_password(monkeypatch):
+    import app as webapp
+
+    monkeypatch.delenv("APP_PASSWORD", raising=False)
+    assert webapp.app.test_client().get("/api/config").status_code == 200

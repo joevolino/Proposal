@@ -1,0 +1,23 @@
+# Render Blueprint: https://render.com/docs/blueprint-spec
+# In Render: New > Blueprint > pick this repository. You'll be asked for the two secret values below.
+services:
+  - type: web
+    name: vensurehr-proposal-builder
+    runtime: python
+    # "free" sleeps after 15 idle minutes (first visit then takes ~1 minute to wake).
+    # Change to "starter" for an always-on instance.
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    # Long timeout: AI drafting of large rate packets can take several minutes.
+    startCommand: gunicorn app:app --workers 2 --threads 4 --timeout 600 --bind 0.0.0.0:$PORT
+    healthCheckPath: /healthz
+    autoDeploy: true
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: ANTHROPIC_API_KEY
+        sync: false          # enter your key when creating the Blueprint
+      - key: APP_PASSWORD
+        sync: false          # password your team types to open the site
+      - key: APP_USERNAME
+        value: vensurehr
