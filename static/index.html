@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VensureHR Proposal Builder</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3E%3Crect width=%2716%27 height=%2716%27 rx=%273%27 fill=%27%230E1E3A%27/%3E%3Ccircle cx=%278%27 cy=%278%27 r=%274%27 fill=%27%23F26522%27/%3E%3C/svg%3E">
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><span class="mark"></span>Vensure<b>HR</b><span class="app-name">All-In Cost Proposal Builder</span></div>
+  <nav class="steps">
+    <button class="step active" data-step="1">1 &nbsp;Client &amp; Documents</button>
+    <button class="step" data-step="2" disabled>2 &nbsp;Review &amp; Edit</button>
+    <button class="step" data-step="3" disabled>3 &nbsp;PDF</button>
+  </nav>
+</header>
+
+<main>
+  <!-- STEP 1 -->
+  <section id="step1" class="page">
+    <form id="intake" autocomplete="off">
+      <div class="grid2">
+        <div class="card">
+          <h2>Client information</h2>
+          <div class="fields">
+            <label class="span2">Company name *<input name="client_name" required placeholder="QCIC, Inc."></label>
+            <label>Industry<input name="industry" placeholder="Business Consulting"></label>
+            <label>Employees<input name="employee_count" type="number" min="0" placeholder="20"></label>
+            <label>States<input name="states" placeholder="NY, NJ, TX"></label>
+            <label>Proposed effective date *<input name="effective_date" type="date" required></label>
+            <label>Current PEO / provider<input name="incumbent_name" placeholder="Justworks"></label>
+            <label>Primary contact<input name="contact_name"></label>
+            <label>Contact title<input name="contact_title"></label>
+            <label class="span2">Client address<input name="client_address"></label>
+          </div>
+        </div>
+        <div class="card">
+          <h2>Prepared by <small>(remembered on this device)</small></h2>
+          <div class="fields">
+            <label>Consultant name<input name="consultant_name" data-remember></label>
+            <label>Title<input name="consultant_title" data-remember value="Business Consultant"></label>
+            <label>Phone<input name="consultant_phone" data-remember></label>
+            <label>Email<input name="consultant_email" type="email" data-remember></label>
+            <label class="span2">Office address<input name="consultant_address" data-remember></label>
+          </div>
+          <h2 class="mt">VensureHR pricing <small>(overrides the pricing illustration)</small></h2>
+          <div class="fields">
+            <label>Admin fee (PEPM $)<input name="admin_pepm" type="number" step="0.01" min="0"></label>
+            <label>One-time setup fee ($)<input name="setup_fee" type="number" step="0.01" min="0"></label>
+            <label class="span2">Elected ancillary, employer annual cost ($)<input name="proposed_ancillary_annual" type="number" step="0.01" min="0"></label>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Current costs with the incumbent <small>(annual; leave blank if unknown and the proposal will ask for the invoice)</small></h2>
+        <div class="fields cols6">
+          <label>Medical premiums<input name="incumbent_medical_annual" type="number" step="0.01"></label>
+          <label>PEO / admin fees<input name="incumbent_admin_annual" type="number" step="0.01"></label>
+          <label>Workers' comp<input name="incumbent_wc_annual" type="number" step="0.01"></label>
+          <label>SUTA<input name="incumbent_suta_annual" type="number" step="0.01"></label>
+          <label>Ancillary<input name="incumbent_ancillary_annual" type="number" step="0.01"></label>
+          <label>Other fees<input name="incumbent_other_annual" type="number" step="0.01"></label>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Supporting documents</h2>
+        <p class="hint">Drop files on a category or click to browse. PDF, Excel (.xlsx/.xlsm), Word, CSV, text, images and .zip packets are accepted.</p>
+        <div id="dropzones" class="dropzones"></div>
+      </div>
+
+      <div class="card">
+        <h2>Consultant notes <small>(pain points, priorities, anything the documents don't say)</small></h2>
+        <textarea name="consultant_notes" rows="4" placeholder="e.g. Owner is frustrated with Justworks response times; wants to keep Aetna; open to adding dental options."></textarea>
+      </div>
+
+      <div class="actions">
+        <label class="btn ghost file-btn" style="margin-right:auto">Open a saved draft (.json)<input type="file" id="loadJson1" accept=".json" hidden></label>
+        <label class="toggle" id="aiToggleWrap"><input type="checkbox" id="useAi" checked> Draft with AI from the uploaded documents</label>
+        <span id="aiStatus" class="muted"></span>
+        <button type="submit" class="btn primary" id="draftBtn">Build draft proposal &rarr;</button>
+      </div>
+    </form>
+  </section>
+
+  <!-- STEP 2 -->
+  <section id="step2" class="page hidden">
+    <div id="warnings"></div>
+    <div class="review">
+      <aside class="side">
+        <div class="summary card" id="summary"></div>
+        <nav id="sectionNav" class="section-nav"></nav>
+        <div class="side-actions">
+          <button class="btn primary block" id="pdfBtn">Generate PDF &rarr;</button>
+          <button class="btn block" id="saveJson">Save draft (.json)</button>
+          <label class="btn block file-btn">Load draft<input type="file" id="loadJson" accept=".json" hidden></label>
+          <button class="btn ghost block" id="backBtn">&larr; Back to intake</button>
+        </div>
+      </aside>
+      <div id="editor" class="editor"></div>
+    </div>
+  </section>
+
+  <!-- STEP 3 -->
+  <section id="step3" class="page hidden">
+    <div class="pdf-bar">
+      <button class="btn" id="backToEdit">&larr; Keep editing</button>
+      <a class="btn primary" id="downloadPdf" href="#">Download PDF</a>
+    </div>
+    <iframe id="pdfFrame" title="Proposal PDF preview"></iframe>
+  </section>
+</main>
+
+<div id="busy" class="busy hidden"><div class="spinner"></div><p id="busyMsg">Working…</p></div>
+<script src="/static/app.js"></script>
+</body>
+</html>
