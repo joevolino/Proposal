@@ -1,0 +1,77 @@
+{
+  "client": {"name": "QCIC, Inc.", "industry": "Business Consulting"},
+  "recap": {
+    "intro": "QCIC is a security engineering and risk consulting firm with about 20 employees spread across nine states. Put simply, the message we heard was: \"Our medical costs are too high for what we get, and we are not getting the level of service we expect from our PEO.\" You want to lower what the company and employees pay for health coverage without taking benefits away, and you want a partner who answers the phone, knows your account, and fixes issues the first time.",
+    "rows": [
+      {"heard": "Medical costs are too high", "means": "Premiums take a large share of the benefits budget and employees feel it in their paychecks.", "changes": "Same carrier (Aetna Tristate) and matching plan designs at lower rates: an estimated $9,890.76 saved per year (4.66%)."},
+      {"heard": "We don't want to lose coverage", "means": "Switching carriers or networks could force employees to change doctors.", "changes": "Aetna stays in place. Deductibles, out-of-pocket maximums, coinsurance and office copays match your current plans."},
+      {"heard": "PEO service isn't where it should be", "means": "Questions take too long to resolve and there is no consistent point of contact who knows the account.", "changes": "You get named contacts: a Dedicated Payroll Specialist, a Dedicated Client Relations Manager and a Dedicated HR Partner."},
+      {"heard": "Multi-state payroll is complicated", "means": "Employees in FL, HI, MD, NJ, NY, PA, SC and TX mean more tax accounts and filings.", "changes": "VensureHR collects, files and remits payroll taxes in every state and handles new state setup."},
+      {"heard": "Switching sounds disruptive", "means": "Fear of payroll errors, lost deductibles or a messy transition.", "changes": "A January 1 start lines up with the calendar-year deductible reset and the new tax year. See the rollout plan."}
+    ],
+    "commitment": "**Our commitment:** this proposal only uses numbers from your Aetna rate comparison, the VensureHR pricing illustration and the ancillary packet. Where we still need data from you (for example, your current PEO fees), we say so instead of guessing."
+  },
+  "medical": {
+    "current_carrier": "Aetna Tristate",
+    "proposed_carrier": "Aetna",
+    "intro": "Each current plan is matched to a VensureHR Aetna plan with the same deductible, out-of-pocket maximum, coinsurance, office visit copays and pharmacy copays. The only design difference is the emergency room copay, which goes from $350 to $400. Employees keep the Aetna network they use today.",
+    "plans": [
+      {"current_name": "NY10 Aetna EPO 20/1000 Y", "proposed_name": "NY EPO OA 1000",
+       "features": [
+         {"feature": "Deductible (Ind / Fam)", "current": "$1,000 / $2,000", "proposed": "$1,000 / $2,000"},
+         {"feature": "Out-of-Pocket Max (Ind / Fam)", "current": "$5,500 / $11,000", "proposed": "$5,500 / $11,000"},
+         {"feature": "PCP / Specialist Copay", "current": "$20 / $65", "proposed": "$20 / $65"},
+         {"feature": "Emergency Room", "current": "$350", "proposed": "$400"}],
+       "tiers": [
+         {"tier": "Employee Only", "count": 5, "current_rate": 1432.00, "proposed_rate": 1317.99},
+         {"tier": "Employee + Spouse", "count": 1, "current_rate": 3078.00, "proposed_rate": 3026.19}]},
+      {"current_name": "NY8 Aetna EPO 30/3000 Y", "proposed_name": "NY EPO OA 3000",
+       "features": [
+         {"feature": "Deductible (Ind / Fam)", "current": "$3,000 / $6,000", "proposed": "$3,000 / $6,000"},
+         {"feature": "Out-of-Pocket Max (Ind / Fam)", "current": "$7,500 / $15,000", "proposed": "$7,500 / $15,000"},
+         {"feature": "PCP / Specialist Copay", "current": "$30 / $65", "proposed": "$30 / $65"},
+         {"feature": "Emergency Room", "current": "$350", "proposed": "$400"}],
+       "tiers": [
+         {"tier": "Employee Only", "count": 1, "current_rate": 1209.00, "proposed_rate": 1113.14},
+         {"tier": "Employee + Spouse", "count": 1, "current_rate": 2599.00, "proposed_rate": 2555.03}]},
+      {"current_name": "NY7 Aetna EPO 45/0 Y", "proposed_name": "NY EPO OA 0 $45",
+       "features": [
+         {"feature": "Deductible (Ind / Fam)", "current": "$0 / $0", "proposed": "$0 / $0"},
+         {"feature": "Out-of-Pocket Max (Ind / Fam)", "current": "$5,500 / $11,000", "proposed": "$5,500 / $11,000"},
+         {"feature": "PCP / Specialist Copay", "current": "$45 / $65", "proposed": "$45 / $65"},
+         {"feature": "Emergency Room", "current": "$350", "proposed": "$400"}],
+       "tiers": [
+         {"tier": "Employee + Spouse", "count": 1, "current_rate": 3643.00, "proposed_rate": 3580.46}]}
+    ],
+    "footnote": "QCIC may offer up to 8 plans. The full Aetna portfolio (26 additional plan options, including HSA-qualified and out-of-area PPO plans) is available if you want to add a lower-cost or richer option. Rates are valid for 90 days and final rates are set by underwriting after enrollment."
+  },
+  "dental": {
+    "rows": [
+      {"plan": "Enhanced Elite", "coinsurance": "90% / 60%", "annual_max": "$5,250", "ortho": "50%, $1,500", "ee": 65.75, "es": 131.31, "ec": 154.53, "fam": 236.30},
+      {"plan": "Enhanced Premier", "coinsurance": "80% / 50%", "annual_max": "$2,250", "ortho": "50%, $1,500", "ee": 53.19, "es": 106.22, "ec": 125.20, "fam": 191.37},
+      {"plan": "Enhanced Standard", "coinsurance": "80% / 50%", "annual_max": "$1,750", "ortho": "40%, $1,500", "ee": 41.68, "es": 83.22, "ec": 93.82, "fam": 145.18},
+      {"plan": "Basic Plus", "coinsurance": "60% / 50%", "annual_max": "$1,250", "ortho": "Not covered", "ee": 28.62, "es": 57.14, "ec": 62.20, "fam": 96.96},
+      {"plan": "Basic", "coinsurance": "60% / 30%", "annual_max": "$1,250", "ortho": "Not covered", "ee": 23.89, "es": 47.69, "ec": 51.91, "fam": 80.92},
+      {"plan": "DHMO (NY)", "coinsurance": "Fixed copays", "annual_max": "None", "ortho": "Fee schedule", "ee": 11.50, "es": 20.29, "ec": 23.24, "fam": 35.17}
+    ],
+    "note": "All PPO plans: 100% preventive, $50 / $150 deductible. Employees can see in-network or out-of-network dentists."
+  },
+  "vision": {
+    "rows": [
+      {"plan": "VSP Vision", "exam_materials": "$10 / $25", "frames": "$200 allowance", "contacts": "$200 allowance", "ee": 7.34, "es": 14.72, "ec": 12.46, "fam": 20.52},
+      {"plan": "Davis Vision", "exam_materials": "$10 / $25", "frames": "$200 allowance", "contacts": "$200 allowance", "ee": 6.54, "es": 13.11, "ec": 11.09, "fam": 18.27}
+    ],
+    "note": ""
+  },
+  "ancillary_recommendation": "**Our recommendation:** offer three dental choices (DHMO, Enhanced Standard and Enhanced Premier) so employees can pick low, middle or high coverage, plus VSP Vision. Benefits are the same on VSP and Davis; VSP has the larger network for a small price difference. Once you share current dental/vision enrollment, we will add an exact cost comparison.",
+  "additional_coverage": [
+    {"coverage": "Basic Life / AD&D (employer paid)", "options": "$15k, $25k, $50k, $100k, $200k, 1x or 2x salary", "rate": "$0.146 per $1,000 / month"},
+    {"coverage": "Short-Term Disability", "options": "60% up to $2,500/wk or 50% up to $1,000/wk; employer or voluntary", "rate": "NY employer-paid from $0.184"},
+    {"coverage": "Long-Term Disability", "options": "50%-60%, $1,000-$15,000/mo max, 90 or 180-day wait", "rate": "Employer-paid $0.205-$0.300"},
+    {"coverage": "Voluntary Life", "options": "$10k-$500k employee; GI up to $300k", "rate": "Age-banded, employee paid"},
+    {"coverage": "Accident", "options": "Value / Advantage / Premier", "rate": "EE from $6.46 / month"},
+    {"coverage": "Critical Illness", "options": "$10k, $20k or $30k", "rate": "Age-banded per $1,000"},
+    {"coverage": "Hospital Indemnity", "options": "Low / High / Highest", "rate": "EE from $9.10 / month"}
+  ],
+  "additional_note": "Example: $25,000 employer-paid Basic Life for 20 employees = 20 x 25 x $0.146 = $73.00 per month ($876 per year). STD and LTD rates are applied to covered benefit/payroll per the ancillary packet."
+}
